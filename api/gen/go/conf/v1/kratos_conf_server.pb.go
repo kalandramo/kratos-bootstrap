@@ -25,6 +25,9 @@ const (
 // 服务器
 type Server struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Rest          *Server_REST           `protobuf:"bytes,1,opt,name=rest,proto3,oneof" json:"rest,omitempty"`           // REST 服务配置
+	Grpc          *Server_GRPC           `protobuf:"bytes,2,opt,name=grpc,proto3,oneof" json:"grpc,omitempty"`           // gRPC 服务配置
+	Websocket     *Server_Websocket      `protobuf:"bytes,3,opt,name=websocket,proto3,oneof" json:"websocket,omitempty"` // Websocket 服务配置
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -57,6 +60,27 @@ func (x *Server) ProtoReflect() protoreflect.Message {
 // Deprecated: Use Server.ProtoReflect.Descriptor instead.
 func (*Server) Descriptor() ([]byte, []int) {
 	return file_conf_v1_kratos_conf_server_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *Server) GetRest() *Server_REST {
+	if x != nil {
+		return x.Rest
+	}
+	return nil
+}
+
+func (x *Server) GetGrpc() *Server_GRPC {
+	if x != nil {
+		return x.Grpc
+	}
+	return nil
+}
+
+func (x *Server) GetWebsocket() *Server_Websocket {
+	if x != nil {
+		return x.Websocket
+	}
+	return nil
 }
 
 // REST
@@ -187,7 +211,7 @@ type Server_Websocket struct {
 	Network       string                 `protobuf:"bytes,1,opt,name=network,proto3" json:"network,omitempty"` // 网络样式：http、https
 	Addr          string                 `protobuf:"bytes,2,opt,name=addr,proto3" json:"addr,omitempty"`       // 服务监听地址
 	Path          string                 `protobuf:"bytes,3,opt,name=path,proto3" json:"path,omitempty"`       // 路径
-	Codec         string                 `protobuf:"bytes,4,opt,name=codec,proto3" json:"codec,omitempty"`     // 编解码器: json,xml,yaml...
+	Codec         string                 `protobuf:"bytes,4,opt,name=codec,proto3" json:"codec,omitempty"`     // 编解码器：json,xml,yaml...
 	Timeout       *durationpb.Duration   `protobuf:"bytes,5,opt,name=timeout,proto3" json:"timeout,omitempty"` // 超时时间
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -262,8 +286,11 @@ var File_conf_v1_kratos_conf_server_proto protoreflect.FileDescriptor
 
 const file_conf_v1_kratos_conf_server_proto_rawDesc = "" +
 	"\n" +
-	" conf/v1/kratos_conf_server.proto\x12\aconf.v1\x1a\x1egoogle/protobuf/duration.proto\"\xf9\x02\n" +
-	"\x06Server\x1ai\n" +
+	" conf/v1/kratos_conf_server.proto\x12\aconf.v1\x1a\x1egoogle/protobuf/duration.proto\"\xb5\x04\n" +
+	"\x06Server\x12-\n" +
+	"\x04rest\x18\x01 \x01(\v2\x14.conf.v1.Server.RESTH\x00R\x04rest\x88\x01\x01\x12-\n" +
+	"\x04grpc\x18\x02 \x01(\v2\x14.conf.v1.Server.GRPCH\x01R\x04grpc\x88\x01\x01\x12<\n" +
+	"\twebsocket\x18\x03 \x01(\v2\x19.conf.v1.Server.WebsocketH\x02R\twebsocket\x88\x01\x01\x1ai\n" +
 	"\x04REST\x12\x18\n" +
 	"\anetwork\x18\x01 \x01(\tR\anetwork\x12\x12\n" +
 	"\x04addr\x18\x02 \x01(\tR\x04addr\x123\n" +
@@ -277,7 +304,11 @@ const file_conf_v1_kratos_conf_server_proto_rawDesc = "" +
 	"\x04addr\x18\x02 \x01(\tR\x04addr\x12\x12\n" +
 	"\x04path\x18\x03 \x01(\tR\x04path\x12\x14\n" +
 	"\x05codec\x18\x04 \x01(\tR\x05codec\x123\n" +
-	"\atimeout\x18\x05 \x01(\v2\x19.google.protobuf.DurationR\atimeoutB\xa3\x01\n" +
+	"\atimeout\x18\x05 \x01(\v2\x19.google.protobuf.DurationR\atimeoutB\a\n" +
+	"\x05_restB\a\n" +
+	"\x05_grpcB\f\n" +
+	"\n" +
+	"_websocketB\xa3\x01\n" +
 	"\vcom.conf.v1B\x15KratosConfServerProtoP\x01Z@github.com/kalandramo/kratos-bootstrap/api/gen/go/conf/v1;confv1\xa2\x02\x03CXX\xaa\x02\aConf.V1\xca\x02\aConf\\V1\xe2\x02\x13Conf\\V1\\GPBMetadata\xea\x02\bConf::V1b\x06proto3"
 
 var (
@@ -301,14 +332,17 @@ var file_conf_v1_kratos_conf_server_proto_goTypes = []any{
 	(*durationpb.Duration)(nil), // 4: google.protobuf.Duration
 }
 var file_conf_v1_kratos_conf_server_proto_depIdxs = []int32{
-	4, // 0: conf.v1.Server.REST.timeout:type_name -> google.protobuf.Duration
-	4, // 1: conf.v1.Server.GRPC.timeout:type_name -> google.protobuf.Duration
-	4, // 2: conf.v1.Server.Websocket.timeout:type_name -> google.protobuf.Duration
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	1, // 0: conf.v1.Server.rest:type_name -> conf.v1.Server.REST
+	2, // 1: conf.v1.Server.grpc:type_name -> conf.v1.Server.GRPC
+	3, // 2: conf.v1.Server.websocket:type_name -> conf.v1.Server.Websocket
+	4, // 3: conf.v1.Server.REST.timeout:type_name -> google.protobuf.Duration
+	4, // 4: conf.v1.Server.GRPC.timeout:type_name -> google.protobuf.Duration
+	4, // 5: conf.v1.Server.Websocket.timeout:type_name -> google.protobuf.Duration
+	6, // [6:6] is the sub-list for method output_type
+	6, // [6:6] is the sub-list for method input_type
+	6, // [6:6] is the sub-list for extension type_name
+	6, // [6:6] is the sub-list for extension extendee
+	0, // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_conf_v1_kratos_conf_server_proto_init() }
@@ -316,6 +350,7 @@ func file_conf_v1_kratos_conf_server_proto_init() {
 	if File_conf_v1_kratos_conf_server_proto != nil {
 		return
 	}
+	file_conf_v1_kratos_conf_server_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
