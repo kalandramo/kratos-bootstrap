@@ -23,15 +23,15 @@ const (
 )
 
 // NewAppInfo 创建应用信息
-func NewAppInfo(appID, version, appName *string) *conf.AppInfo {
+func NewAppInfo(appId, version, appName *string) *conf.AppInfo {
 	ai := &conf.AppInfo{
 		Metadata: map[string]string{},
 	}
 
-	if appID == nil {
+	if appId == nil {
 		ai.AppId = defaultAppId
 	} else {
-		ai.AppId = *appID
+		ai.AppId = *appId
 	}
 
 	if version == nil {
