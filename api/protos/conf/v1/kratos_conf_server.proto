@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package conf.v1;
+
+option go_package = "github.com/kalandramo/kratos-bootstrap/api/gen/go/conf/v1;conf";
+
+import "google/protobuf/duration.proto";
+
+// 服务器
+message Server {
+  // REST
+  message REST {
+    string network = 1; // 网络
+    string addr = 2;  // 服务监听地址
+    google.protobuf.Duration timeout = 3; // 超时时间
+  }
+
+  // gPRC
+  message GRPC {
+    string network = 1; // 网络
+    string addr = 2;  // 服务监听地址
+    google.protobuf.Duration timeout = 3; // 超时时间
+  }
+
+  // Websocket
+  message Websocket {
+    string network = 1; // 网络样式：http、https
+    string addr = 2;  // 服务监听地址
+    string path = 3;  // 路径
+    string codec = 4;  // 编解码器: json,xml,yaml...
+    google.protobuf.Duration timeout = 5; // 超时时间
+  }
+}

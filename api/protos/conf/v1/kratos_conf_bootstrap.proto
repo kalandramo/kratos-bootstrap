@@ -4,9 +4,11 @@ package conf.v1;
 
 option go_package = "github.com/kalandramo/kratos-bootstrap/api/gen/go/conf/v1;conf";
 
+import "conf/v1/kratos_conf_server.proto";
+
 // 引导信息
 message Bootstrap {
-//   optional Server server = 1;
+  optional Server server = 1;
 //   optional Client client = 2;
 //   optional Data data = 3;
 //   optional Tracer trace = 4;
