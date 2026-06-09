@@ -15,10 +15,10 @@ import (
 )
 
 const (
-	defaultProject = "Unknown Project"
-	defaultAppName = "Unknown App Name"
-	defaultAppId   = "unknown-app-id"
-	defaultName    = "Unknown Name"
+	defaultProject = "default-project"
+	defaultAppName = "default-app-name"
+	defaultAppId   = "default-app-id"
+	defaultName    = "default-name"
 	defaultVersion = "v1.0.0"
 )
 
