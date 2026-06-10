@@ -1,9 +1,47 @@
-.PHONY: api init plugin cli
+.PHONY: api init plugin cli tidy gen update-all
 
 # generate protobuf api go code
 api:
-	cd api && \
-	buf generate
+	cd api && buf generate
+
+# generate all code
+gen: api
+
+# sync all workspace modules
+tidy:
+	@echo "==> syncing workspace..."
+	go work sync
+	@echo "==> tidying all modules..."
+	@for mod in $$(find . -maxdepth 2 -name "go.mod" -not -path "./.claude/*"); do \
+		dir=$$(dirname "$$mod"); \
+		echo "==> tidy: $$dir"; \
+		(cd "$$dir" && go mod tidy); \
+	done
+	@echo "==> done"
+
+# update all dependencies to latest local versions
+# usage: make update-all
+update-all:
+	@echo "==> updating all local module dependencies..."
+	@# update api version in go.work
+	@echo "==> updating api in workspace..."
+	go work use ./api
+	@# update bootstrap version in go.work
+	@echo "==> updating bootstrap in workspace..."
+	go work use ./bootstrap
+	@# update server version in go.work
+	@echo "==> updating server in workspace..."
+	go work use ./server
+	@# update config version in go.work
+	@echo "==> updating config in workspace..."
+	go work use ./config
+	@# update example version in go.work
+	@echo "==> updating example in workspace..."
+	go work use ./example
+	@# sync workspace
+	@echo "==> syncing workspace..."
+	go work sync
+	@echo "==> done"
 
 # initialize develop environment
 init: plugin cli
