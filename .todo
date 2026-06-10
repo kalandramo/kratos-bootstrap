@@ -1,1 +1,12 @@
-启动流程功能
+[x] API 定义配置模块：`api`
+[x] Kratos 服务通信传输管理：`server`
+[x] Kratos 配置加载：`config`
+[x] Kratos 启动引导：`bootstrap`
+[x] 示例模块：`example`
+[x] 文档：`docs/`（Go Workspace 指南、多模块依赖管理）
+[x] Makefile 构建命令
+
+[ ] 日志模块集成（zap/logrus）
+[ ] 数据库/缓存连接池
+[ ] 健康检查端点
+[ ] 单元测试覆盖
