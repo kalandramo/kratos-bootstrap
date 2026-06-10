@@ -20,11 +20,6 @@ message Middleware {
     optional string refresh_token_key_prefix  = 6; // 刷新令牌键前缀
   }
 
-  // 限流器
-  message RateLimiter {
-    string name = 1; // 限流器名字，支持：bbr。
-  }
-
   // 性能指标
   message Metrics {
     bool histogram = 1; // 直方图
@@ -33,7 +28,6 @@ message Middleware {
     bool summary = 4; // 摘要
   }
 
-  RateLimiter limiter = 1;
   Metrics metrics = 2;
   Auth auth = 3;
 
@@ -41,6 +35,7 @@ message Middleware {
   bool enable_recovery = 11; // 异常恢复
   bool enable_tracing = 12; // 链路追踪开关
   bool enable_validate = 13; // 参数校验开关
-  bool enable_circuit_breaker = 14; // 熔断器
-  bool enable_metadata = 15; // 元数据
+  bool enable_limiter = 14; // 限流器开关，Kratos v3 默认使用 BBR 限流器
+  bool enable_circuit_breaker = 15; // 熔断器
+  bool enable_metadata = 16; // 元数据
 }

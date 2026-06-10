@@ -24,16 +24,16 @@ const (
 
 // 中间件
 type Middleware struct {
-	state                protoimpl.MessageState  `protogen:"open.v1"`
-	Limiter              *Middleware_RateLimiter `protobuf:"bytes,1,opt,name=limiter,proto3" json:"limiter,omitempty"`
-	Metrics              *Middleware_Metrics     `protobuf:"bytes,2,opt,name=metrics,proto3" json:"metrics,omitempty"`
-	Auth                 *Middleware_Auth        `protobuf:"bytes,3,opt,name=auth,proto3" json:"auth,omitempty"`
-	EnableLogging        bool                    `protobuf:"varint,10,opt,name=enable_logging,json=enableLogging,proto3" json:"enable_logging,omitempty"`                        // 日志开关
-	EnableRecovery       bool                    `protobuf:"varint,11,opt,name=enable_recovery,json=enableRecovery,proto3" json:"enable_recovery,omitempty"`                     // 异常恢复
-	EnableTracing        bool                    `protobuf:"varint,12,opt,name=enable_tracing,json=enableTracing,proto3" json:"enable_tracing,omitempty"`                        // 链路追踪开关
-	EnableValidate       bool                    `protobuf:"varint,13,opt,name=enable_validate,json=enableValidate,proto3" json:"enable_validate,omitempty"`                     // 参数校验开关
-	EnableCircuitBreaker bool                    `protobuf:"varint,14,opt,name=enable_circuit_breaker,json=enableCircuitBreaker,proto3" json:"enable_circuit_breaker,omitempty"` // 熔断器
-	EnableMetadata       bool                    `protobuf:"varint,15,opt,name=enable_metadata,json=enableMetadata,proto3" json:"enable_metadata,omitempty"`                     // 元数据
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Metrics              *Middleware_Metrics    `protobuf:"bytes,2,opt,name=metrics,proto3" json:"metrics,omitempty"`
+	Auth                 *Middleware_Auth       `protobuf:"bytes,3,opt,name=auth,proto3" json:"auth,omitempty"`
+	EnableLogging        bool                   `protobuf:"varint,10,opt,name=enable_logging,json=enableLogging,proto3" json:"enable_logging,omitempty"`                        // 日志开关
+	EnableRecovery       bool                   `protobuf:"varint,11,opt,name=enable_recovery,json=enableRecovery,proto3" json:"enable_recovery,omitempty"`                     // 异常恢复
+	EnableTracing        bool                   `protobuf:"varint,12,opt,name=enable_tracing,json=enableTracing,proto3" json:"enable_tracing,omitempty"`                        // 链路追踪开关
+	EnableValidate       bool                   `protobuf:"varint,13,opt,name=enable_validate,json=enableValidate,proto3" json:"enable_validate,omitempty"`                     // 参数校验开关
+	EnableLimiter        bool                   `protobuf:"varint,14,opt,name=enable_limiter,json=enableLimiter,proto3" json:"enable_limiter,omitempty"`                        // 限流器开关，Kratos v3 默认使用 BBR 限流器
+	EnableCircuitBreaker bool                   `protobuf:"varint,15,opt,name=enable_circuit_breaker,json=enableCircuitBreaker,proto3" json:"enable_circuit_breaker,omitempty"` // 熔断器
+	EnableMetadata       bool                   `protobuf:"varint,16,opt,name=enable_metadata,json=enableMetadata,proto3" json:"enable_metadata,omitempty"`                     // 元数据
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -66,13 +66,6 @@ func (x *Middleware) ProtoReflect() protoreflect.Message {
 // Deprecated: Use Middleware.ProtoReflect.Descriptor instead.
 func (*Middleware) Descriptor() ([]byte, []int) {
 	return file_conf_v1_kratos_conf_middleware_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *Middleware) GetLimiter() *Middleware_RateLimiter {
-	if x != nil {
-		return x.Limiter
-	}
-	return nil
 }
 
 func (x *Middleware) GetMetrics() *Middleware_Metrics {
@@ -113,6 +106,13 @@ func (x *Middleware) GetEnableTracing() bool {
 func (x *Middleware) GetEnableValidate() bool {
 	if x != nil {
 		return x.EnableValidate
+	}
+	return false
+}
+
+func (x *Middleware) GetEnableLimiter() bool {
+	if x != nil {
+		return x.EnableLimiter
 	}
 	return false
 }
@@ -216,51 +216,6 @@ func (x *Middleware_Auth) GetRefreshTokenKeyPrefix() string {
 	return ""
 }
 
-// 限流器
-type Middleware_RateLimiter struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"` // 限流器名字，支持：bbr。
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *Middleware_RateLimiter) Reset() {
-	*x = Middleware_RateLimiter{}
-	mi := &file_conf_v1_kratos_conf_middleware_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *Middleware_RateLimiter) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Middleware_RateLimiter) ProtoMessage() {}
-
-func (x *Middleware_RateLimiter) ProtoReflect() protoreflect.Message {
-	mi := &file_conf_v1_kratos_conf_middleware_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Middleware_RateLimiter.ProtoReflect.Descriptor instead.
-func (*Middleware_RateLimiter) Descriptor() ([]byte, []int) {
-	return file_conf_v1_kratos_conf_middleware_proto_rawDescGZIP(), []int{0, 1}
-}
-
-func (x *Middleware_RateLimiter) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
 // 性能指标
 type Middleware_Metrics struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -274,7 +229,7 @@ type Middleware_Metrics struct {
 
 func (x *Middleware_Metrics) Reset() {
 	*x = Middleware_Metrics{}
-	mi := &file_conf_v1_kratos_conf_middleware_proto_msgTypes[3]
+	mi := &file_conf_v1_kratos_conf_middleware_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -286,7 +241,7 @@ func (x *Middleware_Metrics) String() string {
 func (*Middleware_Metrics) ProtoMessage() {}
 
 func (x *Middleware_Metrics) ProtoReflect() protoreflect.Message {
-	mi := &file_conf_v1_kratos_conf_middleware_proto_msgTypes[3]
+	mi := &file_conf_v1_kratos_conf_middleware_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -299,7 +254,7 @@ func (x *Middleware_Metrics) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Middleware_Metrics.ProtoReflect.Descriptor instead.
 func (*Middleware_Metrics) Descriptor() ([]byte, []int) {
-	return file_conf_v1_kratos_conf_middleware_proto_rawDescGZIP(), []int{0, 2}
+	return file_conf_v1_kratos_conf_middleware_proto_rawDescGZIP(), []int{0, 1}
 }
 
 func (x *Middleware_Metrics) GetHistogram() bool {
@@ -334,19 +289,19 @@ var File_conf_v1_kratos_conf_middleware_proto protoreflect.FileDescriptor
 
 const file_conf_v1_kratos_conf_middleware_proto_rawDesc = "" +
 	"\n" +
-	"$conf/v1/kratos_conf_middleware.proto\x12\aconf.v1\x1a\x1egoogle/protobuf/duration.proto\"\x80\b\n" +
+	"$conf/v1/kratos_conf_middleware.proto\x12\aconf.v1\x1a\x1egoogle/protobuf/duration.proto\"\xc9\a\n" +
 	"\n" +
-	"Middleware\x129\n" +
-	"\alimiter\x18\x01 \x01(\v2\x1f.conf.v1.Middleware.RateLimiterR\alimiter\x125\n" +
+	"Middleware\x125\n" +
 	"\ametrics\x18\x02 \x01(\v2\x1b.conf.v1.Middleware.MetricsR\ametrics\x12,\n" +
 	"\x04auth\x18\x03 \x01(\v2\x18.conf.v1.Middleware.AuthR\x04auth\x12%\n" +
 	"\x0eenable_logging\x18\n" +
 	" \x01(\bR\renableLogging\x12'\n" +
 	"\x0fenable_recovery\x18\v \x01(\bR\x0eenableRecovery\x12%\n" +
 	"\x0eenable_tracing\x18\f \x01(\bR\renableTracing\x12'\n" +
-	"\x0fenable_validate\x18\r \x01(\bR\x0eenableValidate\x124\n" +
-	"\x16enable_circuit_breaker\x18\x0e \x01(\bR\x14enableCircuitBreaker\x12'\n" +
-	"\x0fenable_metadata\x18\x0f \x01(\bR\x0eenableMetadata\x1a\xbc\x03\n" +
+	"\x0fenable_validate\x18\r \x01(\bR\x0eenableValidate\x12%\n" +
+	"\x0eenable_limiter\x18\x0e \x01(\bR\renableLimiter\x124\n" +
+	"\x16enable_circuit_breaker\x18\x0f \x01(\bR\x14enableCircuitBreaker\x12'\n" +
+	"\x0fenable_metadata\x18\x10 \x01(\bR\x0eenableMetadata\x1a\xbc\x03\n" +
 	"\x04Auth\x12\x16\n" +
 	"\x06method\x18\x01 \x01(\tR\x06method\x12\x10\n" +
 	"\x03key\x18\x02 \x01(\tR\x03key\x12P\n" +
@@ -357,9 +312,7 @@ const file_conf_v1_kratos_conf_middleware_proto_rawDesc = "" +
 	"\x15_access_token_expiresB\x18\n" +
 	"\x16_refresh_token_expiresB\x1a\n" +
 	"\x18_access_token_key_prefixB\x1b\n" +
-	"\x19_refresh_token_key_prefix\x1a!\n" +
-	"\vRateLimiter\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x1aq\n" +
+	"\x19_refresh_token_key_prefix\x1aq\n" +
 	"\aMetrics\x12\x1c\n" +
 	"\thistogram\x18\x01 \x01(\bR\thistogram\x12\x18\n" +
 	"\acounter\x18\x02 \x01(\bR\acounter\x12\x14\n" +
@@ -379,25 +332,23 @@ func file_conf_v1_kratos_conf_middleware_proto_rawDescGZIP() []byte {
 	return file_conf_v1_kratos_conf_middleware_proto_rawDescData
 }
 
-var file_conf_v1_kratos_conf_middleware_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_conf_v1_kratos_conf_middleware_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_conf_v1_kratos_conf_middleware_proto_goTypes = []any{
-	(*Middleware)(nil),             // 0: conf.v1.Middleware
-	(*Middleware_Auth)(nil),        // 1: conf.v1.Middleware.Auth
-	(*Middleware_RateLimiter)(nil), // 2: conf.v1.Middleware.RateLimiter
-	(*Middleware_Metrics)(nil),     // 3: conf.v1.Middleware.Metrics
-	(*durationpb.Duration)(nil),    // 4: google.protobuf.Duration
+	(*Middleware)(nil),          // 0: conf.v1.Middleware
+	(*Middleware_Auth)(nil),     // 1: conf.v1.Middleware.Auth
+	(*Middleware_Metrics)(nil),  // 2: conf.v1.Middleware.Metrics
+	(*durationpb.Duration)(nil), // 3: google.protobuf.Duration
 }
 var file_conf_v1_kratos_conf_middleware_proto_depIdxs = []int32{
-	2, // 0: conf.v1.Middleware.limiter:type_name -> conf.v1.Middleware.RateLimiter
-	3, // 1: conf.v1.Middleware.metrics:type_name -> conf.v1.Middleware.Metrics
-	1, // 2: conf.v1.Middleware.auth:type_name -> conf.v1.Middleware.Auth
-	4, // 3: conf.v1.Middleware.Auth.access_token_expires:type_name -> google.protobuf.Duration
-	4, // 4: conf.v1.Middleware.Auth.refresh_token_expires:type_name -> google.protobuf.Duration
-	5, // [5:5] is the sub-list for method output_type
-	5, // [5:5] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	2, // 0: conf.v1.Middleware.metrics:type_name -> conf.v1.Middleware.Metrics
+	1, // 1: conf.v1.Middleware.auth:type_name -> conf.v1.Middleware.Auth
+	3, // 2: conf.v1.Middleware.Auth.access_token_expires:type_name -> google.protobuf.Duration
+	3, // 3: conf.v1.Middleware.Auth.refresh_token_expires:type_name -> google.protobuf.Duration
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_conf_v1_kratos_conf_middleware_proto_init() }
@@ -412,7 +363,7 @@ func file_conf_v1_kratos_conf_middleware_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_conf_v1_kratos_conf_middleware_proto_rawDesc), len(file_conf_v1_kratos_conf_middleware_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
