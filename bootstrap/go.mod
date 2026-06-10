@@ -4,7 +4,8 @@ go 1.26.1
 
 require (
 	github.com/go-kratos/kratos/v3 v3.0.0-20260605061019-dc13681fec5a
-	github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260608095422-c11ea3ee2a61
+	github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260610081635-c321cb4c3ce4
+	github.com/kalandramo/kratos-bootstrap/config v0.0.0-20260610083236-50cf7a25410c
 	github.com/spf13/cobra v1.10.2
 	github.com/stretchr/testify v1.11.1
 	github.com/tx7do/go-utils v1.1.40
@@ -15,6 +16,7 @@ require (
 require (
 	github.com/bwmarrin/snowflake v0.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/fsnotify/fsnotify v1.10.1 // indirect
 	github.com/go-playground/form/v4 v4.3.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect

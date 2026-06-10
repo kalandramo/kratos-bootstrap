@@ -6,6 +6,8 @@ import (
 	"github.com/go-kratos/kratos/v3"
 	"github.com/go-kratos/kratos/v3/transport"
 	"github.com/spf13/cobra"
+
+	"github.com/kalandramo/kratos-bootstrap/config"
 )
 
 // NewApp 创建应用程序
@@ -80,6 +82,17 @@ func bootstrap(ctx *Context, initApp InitAppFunc) error {
 	ctx.PrintAppInfo()
 
 	var err error
+
+	// load configs
+	if err = config.LoadBootstrapConfig(flags.Conf); err != nil {
+		return err
+	}
+
+	// get bootstrap config
+	ctx.config = config.GetBootstrapConfig()
+	if ctx.config == nil {
+		return fmt.Errorf("bootstrap config is nil")
+	}
 
 	// init app
 	app, cleanup, err := initApp(ctx)

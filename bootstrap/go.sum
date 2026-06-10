@@ -3,6 +3,8 @@ github.com/bwmarrin/snowflake v0.3.0/go.mod h1:NdZxfVWX+oR6y2K0o6qAYv6gIOP9rjG0/
 github.com/cpuguy83/go-md2man/v2 v2.0.6/go.mod h1:oOW0eioCTA6cOiMLiUPZOpcVxMig6NIQQ7OS05n1F4g=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
+github.com/fsnotify/fsnotify v1.10.1 h1:b0/UzAf9yR5rhf3RPm9gf3ehBPpf0oZKIjtpKrx59Ho=
+github.com/fsnotify/fsnotify v1.10.1/go.mod h1:TLheqan6HD6GBK6PrDWyDPBaEV8LspOxvPSjC+bVfgo=
 github.com/go-kratos/kratos/v3 v3.0.0-20260605061019-dc13681fec5a h1:FGgXMh25groYPgZK3H7WZb2WCxd+ZcXF3Bun0YbKhqA=
 github.com/go-kratos/kratos/v3 v3.0.0-20260605061019-dc13681fec5a/go.mod h1:8l+0M5UPlm/5hWLvS+wzxHRVRv6sHMG6Lgb4+rw1KIs=
 github.com/go-playground/assert/v2 v2.2.0 h1:JvknZsQTYeFEAhQwI4qEt9cyV5ONwRHC+lYKSsYSR8s=
@@ -19,8 +21,10 @@ github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aN
 github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
-github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260608095422-c11ea3ee2a61 h1:QuVlWK3vhRg1UduEvetRp54DSwSPNknaNwIwAnAoHW0=
-github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260608095422-c11ea3ee2a61/go.mod h1:khYd8Ok17k2woaQTYcVxAbZb3hTSLV4wcvt0eppI6yQ=
+github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260610081635-c321cb4c3ce4 h1:bBSrajSwF5XX73EO43PoyaZNDHegxmXJFq8JaRU0Kv8=
+github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260610081635-c321cb4c3ce4/go.mod h1:khYd8Ok17k2woaQTYcVxAbZb3hTSLV4wcvt0eppI6yQ=
+github.com/kalandramo/kratos-bootstrap/config v0.0.0-20260610083236-50cf7a25410c h1:4pe5KKl+hI/UQzYCjdoPEfK70RF6Al+5cwGgOdvstLw=
+github.com/kalandramo/kratos-bootstrap/config v0.0.0-20260610083236-50cf7a25410c/go.mod h1:k8Av/8Jb5hvFTZiY1jT73mDt418PXfg3+kBiRHI3eCE=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
 github.com/kr/pretty v0.3.1/go.mod h1:hoEshYVHaxMs3cyo3Yncou5ZscifuDolrwPKZanG3xk=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=
