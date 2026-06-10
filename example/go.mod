@@ -4,7 +4,7 @@ go 1.26.1
 
 require (
 	github.com/go-kratos/kratos/v3 v3.0.0-20260605061019-dc13681fec5a
-	github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260610062538-8f6b657358e2
+	github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260610085511-8b697491fab5
 	github.com/kalandramo/kratos-bootstrap/bootstrap v0.0.0-20260610062756-a23d4e8a10e1
 	github.com/kalandramo/kratos-bootstrap/server v0.0.0-20260610062756-a23d4e8a10e1
 )

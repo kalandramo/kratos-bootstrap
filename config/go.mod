@@ -4,7 +4,7 @@ go 1.26.1
 
 require (
 	github.com/go-kratos/kratos/v3 v3.0.0-20260605061019-dc13681fec5a
-	github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260610081635-c321cb4c3ce4
+	github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260610085511-8b697491fab5
 	google.golang.org/protobuf v1.36.11
 )
 

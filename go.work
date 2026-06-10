@@ -4,4 +4,7 @@ use (
 	.
 	./api
 	./bootstrap
+	./config
+	./example
+	./server
 )

@@ -6,7 +6,7 @@ require (
 	buf.build/go/protovalidate v1.2.0
 	github.com/go-kratos/kratos/v3 v3.0.0-20260605061019-dc13681fec5a
 	github.com/gorilla/handlers v1.5.2
-	github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260610062538-8f6b657358e2
+	github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260610085511-8b697491fab5
 	github.com/tx7do/go-utils v1.1.40
 	google.golang.org/protobuf v1.36.11
 )

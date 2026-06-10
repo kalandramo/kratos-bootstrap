@@ -21,8 +21,8 @@ github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aN
 github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
-github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260610081635-c321cb4c3ce4 h1:bBSrajSwF5XX73EO43PoyaZNDHegxmXJFq8JaRU0Kv8=
-github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260610081635-c321cb4c3ce4/go.mod h1:khYd8Ok17k2woaQTYcVxAbZb3hTSLV4wcvt0eppI6yQ=
+github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260610085511-8b697491fab5 h1:9AkJSCP9NrFs3upL4uF8pnM/QOjoENsnafn2ZJ7pR+Y=
+github.com/kalandramo/kratos-bootstrap/api v0.0.0-20260610085511-8b697491fab5/go.mod h1:khYd8Ok17k2woaQTYcVxAbZb3hTSLV4wcvt0eppI6yQ=
 github.com/kalandramo/kratos-bootstrap/config v0.0.0-20260610083236-50cf7a25410c h1:4pe5KKl+hI/UQzYCjdoPEfK70RF6Al+5cwGgOdvstLw=
 github.com/kalandramo/kratos-bootstrap/config v0.0.0-20260610083236-50cf7a25410c/go.mod h1:k8Av/8Jb5hvFTZiY1jT73mDt418PXfg3+kBiRHI3eCE=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
