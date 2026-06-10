@@ -1,0 +1,11 @@
+server:
+  rest:
+    network: "tcp"
+    addr: "0.0.0.0:8080"
+    timeout: 1s
+    enable_pprof: true
+    middleware:
+      enable_recovery: true
+      enable_validate: true
+      enable_limiter: false
+      enable_metadata: false
