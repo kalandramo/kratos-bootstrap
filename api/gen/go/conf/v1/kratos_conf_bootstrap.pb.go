@@ -25,6 +25,7 @@ const (
 type Bootstrap struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Server        *Server                `protobuf:"bytes,1,opt,name=server,proto3,oneof" json:"server,omitempty"` // 服务器配置
+	Config        *RemoteConfig          `protobuf:"bytes,2,opt,name=config,proto3,oneof" json:"config,omitempty"` // 远程配置服务
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -66,14 +67,23 @@ func (x *Bootstrap) GetServer() *Server {
 	return nil
 }
 
+func (x *Bootstrap) GetConfig() *RemoteConfig {
+	if x != nil {
+		return x.Config
+	}
+	return nil
+}
+
 var File_conf_v1_kratos_conf_bootstrap_proto protoreflect.FileDescriptor
 
 const file_conf_v1_kratos_conf_bootstrap_proto_rawDesc = "" +
 	"\n" +
-	"#conf/v1/kratos_conf_bootstrap.proto\x12\aconf.v1\x1a conf/v1/kratos_conf_server.proto\"D\n" +
+	"#conf/v1/kratos_conf_bootstrap.proto\x12\aconf.v1\x1a conf/v1/kratos_conf_server.proto\x1a conf/v1/kratos_conf_config.proto\"\x83\x01\n" +
 	"\tBootstrap\x12,\n" +
-	"\x06server\x18\x01 \x01(\v2\x0f.conf.v1.ServerH\x00R\x06server\x88\x01\x01B\t\n" +
-	"\a_serverB\xa6\x01\n" +
+	"\x06server\x18\x01 \x01(\v2\x0f.conf.v1.ServerH\x00R\x06server\x88\x01\x01\x122\n" +
+	"\x06config\x18\x02 \x01(\v2\x15.conf.v1.RemoteConfigH\x01R\x06config\x88\x01\x01B\t\n" +
+	"\a_serverB\t\n" +
+	"\a_configB\xa6\x01\n" +
 	"\vcom.conf.v1B\x18KratosConfBootstrapProtoP\x01Z@github.com/kalandramo/kratos-bootstrap/api/gen/go/conf/v1;confv1\xa2\x02\x03CXX\xaa\x02\aConf.V1\xca\x02\aConf\\V1\xe2\x02\x13Conf\\V1\\GPBMetadata\xea\x02\bConf::V1b\x06proto3"
 
 var (
@@ -90,16 +100,18 @@ func file_conf_v1_kratos_conf_bootstrap_proto_rawDescGZIP() []byte {
 
 var file_conf_v1_kratos_conf_bootstrap_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
 var file_conf_v1_kratos_conf_bootstrap_proto_goTypes = []any{
-	(*Bootstrap)(nil), // 0: conf.v1.Bootstrap
-	(*Server)(nil),    // 1: conf.v1.Server
+	(*Bootstrap)(nil),    // 0: conf.v1.Bootstrap
+	(*Server)(nil),       // 1: conf.v1.Server
+	(*RemoteConfig)(nil), // 2: conf.v1.RemoteConfig
 }
 var file_conf_v1_kratos_conf_bootstrap_proto_depIdxs = []int32{
 	1, // 0: conf.v1.Bootstrap.server:type_name -> conf.v1.Server
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2, // 1: conf.v1.Bootstrap.config:type_name -> conf.v1.RemoteConfig
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_conf_v1_kratos_conf_bootstrap_proto_init() }
@@ -108,6 +120,7 @@ func file_conf_v1_kratos_conf_bootstrap_proto_init() {
 		return
 	}
 	file_conf_v1_kratos_conf_server_proto_init()
+	file_conf_v1_kratos_conf_config_proto_init()
 	file_conf_v1_kratos_conf_bootstrap_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
