@@ -33,9 +33,8 @@ message Middleware {
 
   bool enable_logging = 10; // 日志开关
   bool enable_recovery = 11; // 异常恢复
-  bool enable_tracing = 12; // 链路追踪开关
-  bool enable_validate = 13; // 参数校验开关
-  bool enable_limiter = 14; // 限流器开关，Kratos v3 默认使用 BBR 限流器
-  bool enable_circuit_breaker = 15; // 熔断器
-  bool enable_metadata = 16; // 元数据
+  bool enable_validate = 12; // 参数校验开关
+  bool enable_limiter = 13; // 限流器开关，Kratos v3 默认使用 BBR 限流器
+  bool enable_circuit_breaker = 14; // 熔断器
+  bool enable_metadata = 15; // 元数据
 }

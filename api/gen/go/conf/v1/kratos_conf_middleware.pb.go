@@ -29,11 +29,10 @@ type Middleware struct {
 	Auth                 *Middleware_Auth       `protobuf:"bytes,3,opt,name=auth,proto3" json:"auth,omitempty"`
 	EnableLogging        bool                   `protobuf:"varint,10,opt,name=enable_logging,json=enableLogging,proto3" json:"enable_logging,omitempty"`                        // 日志开关
 	EnableRecovery       bool                   `protobuf:"varint,11,opt,name=enable_recovery,json=enableRecovery,proto3" json:"enable_recovery,omitempty"`                     // 异常恢复
-	EnableTracing        bool                   `protobuf:"varint,12,opt,name=enable_tracing,json=enableTracing,proto3" json:"enable_tracing,omitempty"`                        // 链路追踪开关
-	EnableValidate       bool                   `protobuf:"varint,13,opt,name=enable_validate,json=enableValidate,proto3" json:"enable_validate,omitempty"`                     // 参数校验开关
-	EnableLimiter        bool                   `protobuf:"varint,14,opt,name=enable_limiter,json=enableLimiter,proto3" json:"enable_limiter,omitempty"`                        // 限流器开关，Kratos v3 默认使用 BBR 限流器
-	EnableCircuitBreaker bool                   `protobuf:"varint,15,opt,name=enable_circuit_breaker,json=enableCircuitBreaker,proto3" json:"enable_circuit_breaker,omitempty"` // 熔断器
-	EnableMetadata       bool                   `protobuf:"varint,16,opt,name=enable_metadata,json=enableMetadata,proto3" json:"enable_metadata,omitempty"`                     // 元数据
+	EnableValidate       bool                   `protobuf:"varint,12,opt,name=enable_validate,json=enableValidate,proto3" json:"enable_validate,omitempty"`                     // 参数校验开关
+	EnableLimiter        bool                   `protobuf:"varint,13,opt,name=enable_limiter,json=enableLimiter,proto3" json:"enable_limiter,omitempty"`                        // 限流器开关，Kratos v3 默认使用 BBR 限流器
+	EnableCircuitBreaker bool                   `protobuf:"varint,14,opt,name=enable_circuit_breaker,json=enableCircuitBreaker,proto3" json:"enable_circuit_breaker,omitempty"` // 熔断器
+	EnableMetadata       bool                   `protobuf:"varint,15,opt,name=enable_metadata,json=enableMetadata,proto3" json:"enable_metadata,omitempty"`                     // 元数据
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -92,13 +91,6 @@ func (x *Middleware) GetEnableLogging() bool {
 func (x *Middleware) GetEnableRecovery() bool {
 	if x != nil {
 		return x.EnableRecovery
-	}
-	return false
-}
-
-func (x *Middleware) GetEnableTracing() bool {
-	if x != nil {
-		return x.EnableTracing
 	}
 	return false
 }
@@ -289,19 +281,18 @@ var File_conf_v1_kratos_conf_middleware_proto protoreflect.FileDescriptor
 
 const file_conf_v1_kratos_conf_middleware_proto_rawDesc = "" +
 	"\n" +
-	"$conf/v1/kratos_conf_middleware.proto\x12\aconf.v1\x1a\x1egoogle/protobuf/duration.proto\"\xc9\a\n" +
+	"$conf/v1/kratos_conf_middleware.proto\x12\aconf.v1\x1a\x1egoogle/protobuf/duration.proto\"\xa2\a\n" +
 	"\n" +
 	"Middleware\x125\n" +
 	"\ametrics\x18\x02 \x01(\v2\x1b.conf.v1.Middleware.MetricsR\ametrics\x12,\n" +
 	"\x04auth\x18\x03 \x01(\v2\x18.conf.v1.Middleware.AuthR\x04auth\x12%\n" +
 	"\x0eenable_logging\x18\n" +
 	" \x01(\bR\renableLogging\x12'\n" +
-	"\x0fenable_recovery\x18\v \x01(\bR\x0eenableRecovery\x12%\n" +
-	"\x0eenable_tracing\x18\f \x01(\bR\renableTracing\x12'\n" +
-	"\x0fenable_validate\x18\r \x01(\bR\x0eenableValidate\x12%\n" +
-	"\x0eenable_limiter\x18\x0e \x01(\bR\renableLimiter\x124\n" +
-	"\x16enable_circuit_breaker\x18\x0f \x01(\bR\x14enableCircuitBreaker\x12'\n" +
-	"\x0fenable_metadata\x18\x10 \x01(\bR\x0eenableMetadata\x1a\xbc\x03\n" +
+	"\x0fenable_recovery\x18\v \x01(\bR\x0eenableRecovery\x12'\n" +
+	"\x0fenable_validate\x18\f \x01(\bR\x0eenableValidate\x12%\n" +
+	"\x0eenable_limiter\x18\r \x01(\bR\renableLimiter\x124\n" +
+	"\x16enable_circuit_breaker\x18\x0e \x01(\bR\x14enableCircuitBreaker\x12'\n" +
+	"\x0fenable_metadata\x18\x0f \x01(\bR\x0eenableMetadata\x1a\xbc\x03\n" +
 	"\x04Auth\x12\x16\n" +
 	"\x06method\x18\x01 \x01(\tR\x06method\x12\x10\n" +
 	"\x03key\x18\x02 \x01(\tR\x03key\x12P\n" +
