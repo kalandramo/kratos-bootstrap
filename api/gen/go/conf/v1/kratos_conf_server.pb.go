@@ -86,9 +86,14 @@ func (x *Server) GetWebsocket() *Server_Websocket {
 // REST
 type Server_REST struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Network       string                 `protobuf:"bytes,1,opt,name=network,proto3" json:"network,omitempty"` // 网络
-	Addr          string                 `protobuf:"bytes,2,opt,name=addr,proto3" json:"addr,omitempty"`       // 服务监听地址
-	Timeout       *durationpb.Duration   `protobuf:"bytes,3,opt,name=timeout,proto3" json:"timeout,omitempty"` // 超时时间
+	Network       string                 `protobuf:"bytes,1,opt,name=network,proto3" json:"network,omitempty"`                                    // 网络
+	Addr          string                 `protobuf:"bytes,2,opt,name=addr,proto3" json:"addr,omitempty"`                                          // 服务监听地址
+	Timeout       *durationpb.Duration   `protobuf:"bytes,3,opt,name=timeout,proto3" json:"timeout,omitempty"`                                    // 超时时间
+	Cors          *Server_REST_CORS      `protobuf:"bytes,10,opt,name=cors,proto3" json:"cors,omitempty"`                                         // 服务监听地址
+	Middleware    *Middleware            `protobuf:"bytes,11,opt,name=middleware,proto3" json:"middleware,omitempty"`                             // 中间件
+	Tls           *TLS                   `protobuf:"bytes,12,opt,name=tls,proto3" json:"tls,omitempty"`                                           // TLS配置
+	EnableSwagger bool                   `protobuf:"varint,20,opt,name=enable_swagger,json=enableSwagger,proto3" json:"enable_swagger,omitempty"` // 启用SwaggerUI
+	EnablePprof   bool                   `protobuf:"varint,21,opt,name=enable_pprof,json=enablePprof,proto3" json:"enable_pprof,omitempty"`       // 启用pprof
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -144,12 +149,49 @@ func (x *Server_REST) GetTimeout() *durationpb.Duration {
 	return nil
 }
 
+func (x *Server_REST) GetCors() *Server_REST_CORS {
+	if x != nil {
+		return x.Cors
+	}
+	return nil
+}
+
+func (x *Server_REST) GetMiddleware() *Middleware {
+	if x != nil {
+		return x.Middleware
+	}
+	return nil
+}
+
+func (x *Server_REST) GetTls() *TLS {
+	if x != nil {
+		return x.Tls
+	}
+	return nil
+}
+
+func (x *Server_REST) GetEnableSwagger() bool {
+	if x != nil {
+		return x.EnableSwagger
+	}
+	return false
+}
+
+func (x *Server_REST) GetEnablePprof() bool {
+	if x != nil {
+		return x.EnablePprof
+	}
+	return false
+}
+
 // gPRC
 type Server_GRPC struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Network       string                 `protobuf:"bytes,1,opt,name=network,proto3" json:"network,omitempty"` // 网络
 	Addr          string                 `protobuf:"bytes,2,opt,name=addr,proto3" json:"addr,omitempty"`       // 服务监听地址
 	Timeout       *durationpb.Duration   `protobuf:"bytes,3,opt,name=timeout,proto3" json:"timeout,omitempty"` // 超时时间
+	Middleware    *Middleware            `protobuf:"bytes,4,opt,name=middleware,proto3" json:"middleware,omitempty"`
+	Tls           *TLS                   `protobuf:"bytes,5,opt,name=tls,proto3" json:"tls,omitempty"` // TLS配置
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -205,6 +247,20 @@ func (x *Server_GRPC) GetTimeout() *durationpb.Duration {
 	return nil
 }
 
+func (x *Server_GRPC) GetMiddleware() *Middleware {
+	if x != nil {
+		return x.Middleware
+	}
+	return nil
+}
+
+func (x *Server_GRPC) GetTls() *TLS {
+	if x != nil {
+		return x.Tls
+	}
+	return nil
+}
+
 // Websocket
 type Server_Websocket struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
@@ -213,6 +269,7 @@ type Server_Websocket struct {
 	Path          string                 `protobuf:"bytes,3,opt,name=path,proto3" json:"path,omitempty"`       // 路径
 	Codec         string                 `protobuf:"bytes,4,opt,name=codec,proto3" json:"codec,omitempty"`     // 编解码器：json,xml,yaml...
 	Timeout       *durationpb.Duration   `protobuf:"bytes,5,opt,name=timeout,proto3" json:"timeout,omitempty"` // 超时时间
+	Tls           *TLS                   `protobuf:"bytes,6,opt,name=tls,proto3" json:"tls,omitempty"`         // TLS配置
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -282,29 +339,113 @@ func (x *Server_Websocket) GetTimeout() *durationpb.Duration {
 	return nil
 }
 
+func (x *Server_Websocket) GetTls() *TLS {
+	if x != nil {
+		return x.Tls
+	}
+	return nil
+}
+
+type Server_REST_CORS struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Headers       []string               `protobuf:"bytes,1,rep,name=headers,proto3" json:"headers,omitempty"`
+	Methods       []string               `protobuf:"bytes,2,rep,name=methods,proto3" json:"methods,omitempty"`
+	Origins       []string               `protobuf:"bytes,3,rep,name=origins,proto3" json:"origins,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Server_REST_CORS) Reset() {
+	*x = Server_REST_CORS{}
+	mi := &file_conf_v1_kratos_conf_server_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Server_REST_CORS) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Server_REST_CORS) ProtoMessage() {}
+
+func (x *Server_REST_CORS) ProtoReflect() protoreflect.Message {
+	mi := &file_conf_v1_kratos_conf_server_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Server_REST_CORS.ProtoReflect.Descriptor instead.
+func (*Server_REST_CORS) Descriptor() ([]byte, []int) {
+	return file_conf_v1_kratos_conf_server_proto_rawDescGZIP(), []int{0, 0, 0}
+}
+
+func (x *Server_REST_CORS) GetHeaders() []string {
+	if x != nil {
+		return x.Headers
+	}
+	return nil
+}
+
+func (x *Server_REST_CORS) GetMethods() []string {
+	if x != nil {
+		return x.Methods
+	}
+	return nil
+}
+
+func (x *Server_REST_CORS) GetOrigins() []string {
+	if x != nil {
+		return x.Origins
+	}
+	return nil
+}
+
 var File_conf_v1_kratos_conf_server_proto protoreflect.FileDescriptor
 
 const file_conf_v1_kratos_conf_server_proto_rawDesc = "" +
 	"\n" +
-	" conf/v1/kratos_conf_server.proto\x12\aconf.v1\x1a\x1egoogle/protobuf/duration.proto\"\xb5\x04\n" +
+	" conf/v1/kratos_conf_server.proto\x12\aconf.v1\x1a\x1egoogle/protobuf/duration.proto\x1a$conf/v1/kratos_conf_middleware.proto\x1a\x1dconf/v1/kratos_conf_tls.proto\"\xd0\a\n" +
 	"\x06Server\x12-\n" +
 	"\x04rest\x18\x01 \x01(\v2\x14.conf.v1.Server.RESTH\x00R\x04rest\x88\x01\x01\x12-\n" +
 	"\x04grpc\x18\x02 \x01(\v2\x14.conf.v1.Server.GRPCH\x01R\x04grpc\x88\x01\x01\x12<\n" +
-	"\twebsocket\x18\x03 \x01(\v2\x19.conf.v1.Server.WebsocketH\x02R\twebsocket\x88\x01\x01\x1ai\n" +
+	"\twebsocket\x18\x03 \x01(\v2\x19.conf.v1.Server.WebsocketH\x02R\twebsocket\x88\x01\x01\x1a\x8d\x03\n" +
 	"\x04REST\x12\x18\n" +
 	"\anetwork\x18\x01 \x01(\tR\anetwork\x12\x12\n" +
 	"\x04addr\x18\x02 \x01(\tR\x04addr\x123\n" +
-	"\atimeout\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\atimeout\x1ai\n" +
+	"\atimeout\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\atimeout\x12-\n" +
+	"\x04cors\x18\n" +
+	" \x01(\v2\x19.conf.v1.Server.REST.CORSR\x04cors\x123\n" +
+	"\n" +
+	"middleware\x18\v \x01(\v2\x13.conf.v1.MiddlewareR\n" +
+	"middleware\x12\x1e\n" +
+	"\x03tls\x18\f \x01(\v2\f.conf.v1.TLSR\x03tls\x12%\n" +
+	"\x0eenable_swagger\x18\x14 \x01(\bR\renableSwagger\x12!\n" +
+	"\fenable_pprof\x18\x15 \x01(\bR\venablePprof\x1aT\n" +
+	"\x04CORS\x12\x18\n" +
+	"\aheaders\x18\x01 \x03(\tR\aheaders\x12\x18\n" +
+	"\amethods\x18\x02 \x03(\tR\amethods\x12\x18\n" +
+	"\aorigins\x18\x03 \x03(\tR\aorigins\x1a\xbe\x01\n" +
 	"\x04GRPC\x12\x18\n" +
 	"\anetwork\x18\x01 \x01(\tR\anetwork\x12\x12\n" +
 	"\x04addr\x18\x02 \x01(\tR\x04addr\x123\n" +
-	"\atimeout\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\atimeout\x1a\x98\x01\n" +
+	"\atimeout\x18\x03 \x01(\v2\x19.google.protobuf.DurationR\atimeout\x123\n" +
+	"\n" +
+	"middleware\x18\x04 \x01(\v2\x13.conf.v1.MiddlewareR\n" +
+	"middleware\x12\x1e\n" +
+	"\x03tls\x18\x05 \x01(\v2\f.conf.v1.TLSR\x03tls\x1a\xb8\x01\n" +
 	"\tWebsocket\x12\x18\n" +
 	"\anetwork\x18\x01 \x01(\tR\anetwork\x12\x12\n" +
 	"\x04addr\x18\x02 \x01(\tR\x04addr\x12\x12\n" +
 	"\x04path\x18\x03 \x01(\tR\x04path\x12\x14\n" +
 	"\x05codec\x18\x04 \x01(\tR\x05codec\x123\n" +
-	"\atimeout\x18\x05 \x01(\v2\x19.google.protobuf.DurationR\atimeoutB\a\n" +
+	"\atimeout\x18\x05 \x01(\v2\x19.google.protobuf.DurationR\atimeout\x12\x1e\n" +
+	"\x03tls\x18\x06 \x01(\v2\f.conf.v1.TLSR\x03tlsB\a\n" +
 	"\x05_restB\a\n" +
 	"\x05_grpcB\f\n" +
 	"\n" +
@@ -323,26 +464,35 @@ func file_conf_v1_kratos_conf_server_proto_rawDescGZIP() []byte {
 	return file_conf_v1_kratos_conf_server_proto_rawDescData
 }
 
-var file_conf_v1_kratos_conf_server_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_conf_v1_kratos_conf_server_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_conf_v1_kratos_conf_server_proto_goTypes = []any{
 	(*Server)(nil),              // 0: conf.v1.Server
 	(*Server_REST)(nil),         // 1: conf.v1.Server.REST
 	(*Server_GRPC)(nil),         // 2: conf.v1.Server.GRPC
 	(*Server_Websocket)(nil),    // 3: conf.v1.Server.Websocket
-	(*durationpb.Duration)(nil), // 4: google.protobuf.Duration
+	(*Server_REST_CORS)(nil),    // 4: conf.v1.Server.REST.CORS
+	(*durationpb.Duration)(nil), // 5: google.protobuf.Duration
+	(*Middleware)(nil),          // 6: conf.v1.Middleware
+	(*TLS)(nil),                 // 7: conf.v1.TLS
 }
 var file_conf_v1_kratos_conf_server_proto_depIdxs = []int32{
-	1, // 0: conf.v1.Server.rest:type_name -> conf.v1.Server.REST
-	2, // 1: conf.v1.Server.grpc:type_name -> conf.v1.Server.GRPC
-	3, // 2: conf.v1.Server.websocket:type_name -> conf.v1.Server.Websocket
-	4, // 3: conf.v1.Server.REST.timeout:type_name -> google.protobuf.Duration
-	4, // 4: conf.v1.Server.GRPC.timeout:type_name -> google.protobuf.Duration
-	4, // 5: conf.v1.Server.Websocket.timeout:type_name -> google.protobuf.Duration
-	6, // [6:6] is the sub-list for method output_type
-	6, // [6:6] is the sub-list for method input_type
-	6, // [6:6] is the sub-list for extension type_name
-	6, // [6:6] is the sub-list for extension extendee
-	0, // [0:6] is the sub-list for field type_name
+	1,  // 0: conf.v1.Server.rest:type_name -> conf.v1.Server.REST
+	2,  // 1: conf.v1.Server.grpc:type_name -> conf.v1.Server.GRPC
+	3,  // 2: conf.v1.Server.websocket:type_name -> conf.v1.Server.Websocket
+	5,  // 3: conf.v1.Server.REST.timeout:type_name -> google.protobuf.Duration
+	4,  // 4: conf.v1.Server.REST.cors:type_name -> conf.v1.Server.REST.CORS
+	6,  // 5: conf.v1.Server.REST.middleware:type_name -> conf.v1.Middleware
+	7,  // 6: conf.v1.Server.REST.tls:type_name -> conf.v1.TLS
+	5,  // 7: conf.v1.Server.GRPC.timeout:type_name -> google.protobuf.Duration
+	6,  // 8: conf.v1.Server.GRPC.middleware:type_name -> conf.v1.Middleware
+	7,  // 9: conf.v1.Server.GRPC.tls:type_name -> conf.v1.TLS
+	5,  // 10: conf.v1.Server.Websocket.timeout:type_name -> google.protobuf.Duration
+	7,  // 11: conf.v1.Server.Websocket.tls:type_name -> conf.v1.TLS
+	12, // [12:12] is the sub-list for method output_type
+	12, // [12:12] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_conf_v1_kratos_conf_server_proto_init() }
@@ -350,6 +500,8 @@ func file_conf_v1_kratos_conf_server_proto_init() {
 	if File_conf_v1_kratos_conf_server_proto != nil {
 		return
 	}
+	file_conf_v1_kratos_conf_middleware_proto_init()
+	file_conf_v1_kratos_conf_tls_proto_init()
 	file_conf_v1_kratos_conf_server_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -357,7 +509,7 @@ func file_conf_v1_kratos_conf_server_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_conf_v1_kratos_conf_server_proto_rawDesc), len(file_conf_v1_kratos_conf_server_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

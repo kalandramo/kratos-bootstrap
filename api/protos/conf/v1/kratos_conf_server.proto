@@ -5,14 +5,29 @@ package conf.v1;
 option go_package = "github.com/kalandramo/kratos-bootstrap/api/gen/go/conf/v1;conf";
 
 import "google/protobuf/duration.proto";
+import "conf/v1/kratos_conf_middleware.proto";
+import "conf/v1/kratos_conf_tls.proto";
 
 // 服务器
 message Server {
   // REST
   message REST {
+    message CORS {
+      repeated string headers = 1;  //
+      repeated string methods = 2;  //
+      repeated string origins = 3;  //
+    }
+
     string network = 1; // 网络
     string addr = 2;  // 服务监听地址
     google.protobuf.Duration timeout = 3; // 超时时间
+
+    CORS cors = 10;  // 服务监听地址
+    Middleware middleware = 11;  // 中间件
+    TLS tls = 12;  // TLS配置
+
+    bool enable_swagger = 20;  // 启用SwaggerUI
+    bool enable_pprof = 21;  // 启用pprof
   }
 
   // gPRC
@@ -20,6 +35,8 @@ message Server {
     string network = 1; // 网络
     string addr = 2;  // 服务监听地址
     google.protobuf.Duration timeout = 3; // 超时时间
+    Middleware middleware = 4;
+    TLS tls = 5;  // TLS配置
   }
 
   // Websocket
@@ -29,6 +46,7 @@ message Server {
     string path = 3;  // 路径
     string codec = 4;  // 编解码器：json,xml,yaml...
     google.protobuf.Duration timeout = 5; // 超时时间
+    TLS tls = 6;  // TLS配置
   }
 
   optional REST rest = 1;   // REST 服务配置
