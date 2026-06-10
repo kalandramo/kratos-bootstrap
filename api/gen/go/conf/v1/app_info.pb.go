@@ -36,19 +36,19 @@ type AppInfo struct {
 	// 语义化版本号（SemVer），：v1.2.3、2.0.0-beta
 	Version string `protobuf:"bytes,5,opt,name=version,proto3" json:"version,omitempty"`
 	// 运行时信息
-	Hostname  string                 `protobuf:"bytes,10,opt,name=hostname,proto3" json:"hostname,omitempty"`
-	Endpoints []*Endpoint            `protobuf:"bytes,11,rep,name=endpoints,proto3" json:"endpoints,omitempty"`
-	StartTime *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	Hostname  string                 `protobuf:"bytes,10,opt,name=hostname,proto3" json:"hostname,omitempty"`                    // 主机名
+	Endpoints []*Endpoint            `protobuf:"bytes,11,rep,name=endpoints,proto3" json:"endpoints,omitempty"`                  // 服务端点列表
+	StartTime *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"` // 启动时间
 	// 部署/环境/标签
-	Environment string            `protobuf:"bytes,20,opt,name=environment,proto3" json:"environment,omitempty"` // dev/stage/prod
-	Region      string            `protobuf:"bytes,21,opt,name=region,proto3" json:"region,omitempty"`
-	Zone        string            `protobuf:"bytes,22,opt,name=zone,proto3" json:"zone,omitempty"`
-	Labels      map[string]string `protobuf:"bytes,23,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Environment string            `protobuf:"bytes,20,opt,name=environment,proto3" json:"environment,omitempty"`                                                                 // 运行环境：dev/stage/prod
+	Region      string            `protobuf:"bytes,21,opt,name=region,proto3" json:"region,omitempty"`                                                                           // 区域
+	Zone        string            `protobuf:"bytes,22,opt,name=zone,proto3" json:"zone,omitempty"`                                                                               // 可用区
+	Labels      map[string]string `protobuf:"bytes,23,rep,name=labels,proto3" json:"labels,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // 标签映射
 	// 构建信息
-	BuildId   string `protobuf:"bytes,30,opt,name=build_id,json=buildId,proto3" json:"build_id,omitempty"`
-	GitCommit string `protobuf:"bytes,31,opt,name=git_commit,json=gitCommit,proto3" json:"git_commit,omitempty"`
+	BuildId   string `protobuf:"bytes,30,opt,name=build_id,json=buildId,proto3" json:"build_id,omitempty"`       // 构建 ID
+	GitCommit string `protobuf:"bytes,31,opt,name=git_commit,json=gitCommit,proto3" json:"git_commit,omitempty"` // Git 提交哈希
 	// 任意键值元数据
-	Metadata      map[string]string `protobuf:"bytes,40,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	Metadata      map[string]string `protobuf:"bytes,40,rep,name=metadata,proto3" json:"metadata,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"` // 元数据映射
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -188,11 +188,11 @@ func (x *AppInfo) GetMetadata() map[string]string {
 	return nil
 }
 
-// 表示一个可访问的 endpoint（IP:PORT 或 URI）
+// 服务访问端点
 type Endpoint struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Kind          string                 `protobuf:"bytes,1,opt,name=kind,proto3" json:"kind,omitempty"`       // e.g., "grpc", "http", "metrics"
-	Address       string                 `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"` // e.g., "10.0.0.1:8080" or "http://host:8080"
+	Kind          string                 `protobuf:"bytes,1,opt,name=kind,proto3" json:"kind,omitempty"`       // 端点类型，如：grpc、http、metrics
+	Address       string                 `protobuf:"bytes,2,opt,name=address,proto3" json:"address,omitempty"` // 端点地址，如：10.0.0.1:8080 或 http://host:8080
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

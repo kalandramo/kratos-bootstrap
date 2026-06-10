@@ -8,48 +8,49 @@ import "google/protobuf/duration.proto";
 import "conf/v1/kratos_conf_middleware.proto";
 import "conf/v1/kratos_conf_tls.proto";
 
-// 服务器
+// 服务器配置
 message Server {
-  // REST
+  // REST 服务配置
   message REST {
+    // CORS 跨域配置
     message CORS {
-      repeated string headers = 1;  //
-      repeated string methods = 2;  //
-      repeated string origins = 3;  //
+      repeated string headers = 1;  // 允许的请求头
+      repeated string methods = 2;  // 允许的请求方法
+      repeated string origins = 3;  // 允许的源
     }
 
-    string network = 1; // 网络
-    string addr = 2;  // 服务监听地址
-    google.protobuf.Duration timeout = 3; // 超时时间
+    string network = 1; // 网络类型，如：tcp
+    string addr = 2;    // 服务监听地址
+    google.protobuf.Duration timeout = 3; // 请求超时时间
 
-    CORS cors = 10;  // 服务监听地址
-    Middleware middleware = 11;  // 中间件
-    TLS tls = 12;  // TLS配置
+    CORS cors = 10;           // CORS 跨域配置
+    Middleware middleware = 11; // 中间件配置
+    TLS tls = 12;             // TLS 配置
 
-    bool enable_swagger = 20;  // 启用SwaggerUI
-    bool enable_pprof = 21;  // 启用pprof
+    bool enable_swagger = 20; // 启用 SwaggerUI
+    bool enable_pprof = 21;   // 启用 pprof 性能分析
   }
 
-  // gPRC
+  // gRPC 服务配置
   message GRPC {
-    string network = 1; // 网络
-    string addr = 2;  // 服务监听地址
-    google.protobuf.Duration timeout = 3; // 超时时间
-    Middleware middleware = 4;
-    TLS tls = 5;  // TLS配置
+    string network = 1; // 网络类型，如：tcp
+    string addr = 2;    // 服务监听地址
+    google.protobuf.Duration timeout = 3; // 请求超时时间
+    Middleware middleware = 4; // 中间件配置
+    TLS tls = 5;               // TLS 配置
   }
 
-  // Websocket
+  // Websocket 服务配置
   message Websocket {
-    string network = 1; // 网络样式：http、https
-    string addr = 2;  // 服务监听地址
-    string path = 3;  // 路径
-    string codec = 4;  // 编解码器：json,xml,yaml...
-    google.protobuf.Duration timeout = 5; // 超时时间
-    TLS tls = 6;  // TLS配置
+    string network = 1; // 网络类型：http、https
+    string addr = 2;    // 服务监听地址
+    string path = 3;    // 连接路径
+    string codec = 4;   // 编解码器：json、xml、yaml 等
+    google.protobuf.Duration timeout = 5; // 请求超时时间
+    TLS tls = 6;                          // TLS 配置
   }
 
-  optional REST rest = 1;   // REST 服务配置
-  optional GRPC grpc = 2;   // gRPC 服务配置
-  optional Websocket websocket = 3;  // Websocket 服务配置
+  optional REST rest = 1;     // REST 服务配置
+  optional GRPC grpc = 2;     // gRPC 服务配置
+  optional Websocket websocket = 3; // Websocket 服务配置
 }

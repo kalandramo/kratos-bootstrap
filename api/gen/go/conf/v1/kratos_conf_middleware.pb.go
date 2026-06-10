@@ -22,17 +22,17 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// 中间件
+// 中间件配置
 type Middleware struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
-	Metrics              *Middleware_Metrics    `protobuf:"bytes,2,opt,name=metrics,proto3" json:"metrics,omitempty"`
-	Auth                 *Middleware_Auth       `protobuf:"bytes,3,opt,name=auth,proto3" json:"auth,omitempty"`
+	Metrics              *Middleware_Metrics    `protobuf:"bytes,2,opt,name=metrics,proto3" json:"metrics,omitempty"`                                                           // 性能指标
+	Auth                 *Middleware_Auth       `protobuf:"bytes,3,opt,name=auth,proto3" json:"auth,omitempty"`                                                                 // JWT 认证
 	EnableLogging        bool                   `protobuf:"varint,10,opt,name=enable_logging,json=enableLogging,proto3" json:"enable_logging,omitempty"`                        // 日志开关
-	EnableRecovery       bool                   `protobuf:"varint,11,opt,name=enable_recovery,json=enableRecovery,proto3" json:"enable_recovery,omitempty"`                     // 异常恢复
+	EnableRecovery       bool                   `protobuf:"varint,11,opt,name=enable_recovery,json=enableRecovery,proto3" json:"enable_recovery,omitempty"`                     // 异常恢复开关
 	EnableValidate       bool                   `protobuf:"varint,12,opt,name=enable_validate,json=enableValidate,proto3" json:"enable_validate,omitempty"`                     // 参数校验开关
-	EnableLimiter        bool                   `protobuf:"varint,13,opt,name=enable_limiter,json=enableLimiter,proto3" json:"enable_limiter,omitempty"`                        // 限流器开关，Kratos v3 默认使用 BBR 限流器
-	EnableCircuitBreaker bool                   `protobuf:"varint,14,opt,name=enable_circuit_breaker,json=enableCircuitBreaker,proto3" json:"enable_circuit_breaker,omitempty"` // 熔断器
-	EnableMetadata       bool                   `protobuf:"varint,15,opt,name=enable_metadata,json=enableMetadata,proto3" json:"enable_metadata,omitempty"`                     // 元数据
+	EnableLimiter        bool                   `protobuf:"varint,13,opt,name=enable_limiter,json=enableLimiter,proto3" json:"enable_limiter,omitempty"`                        // 限流器开关（Kratos v3 默认使用 BBR 限流器）
+	EnableCircuitBreaker bool                   `protobuf:"varint,14,opt,name=enable_circuit_breaker,json=enableCircuitBreaker,proto3" json:"enable_circuit_breaker,omitempty"` // 熔断器开关
+	EnableMetadata       bool                   `protobuf:"varint,15,opt,name=enable_metadata,json=enableMetadata,proto3" json:"enable_metadata,omitempty"`                     // 元数据开关
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -123,10 +123,10 @@ func (x *Middleware) GetEnableMetadata() bool {
 	return false
 }
 
-// JWT校验
+// JWT 认证配置
 type Middleware_Auth struct {
 	state                 protoimpl.MessageState `protogen:"open.v1"`
-	Method                string                 `protobuf:"bytes,1,opt,name=method,proto3" json:"method,omitempty"`                                                                      // JWT签名的算法，支持算法：HS256
+	Method                string                 `protobuf:"bytes,1,opt,name=method,proto3" json:"method,omitempty"`                                                                      // JWT 签名算法，支持：HS256
 	Key                   string                 `protobuf:"bytes,2,opt,name=key,proto3" json:"key,omitempty"`                                                                            // JWT 秘钥
 	AccessTokenExpires    *durationpb.Duration   `protobuf:"bytes,3,opt,name=access_token_expires,json=accessTokenExpires,proto3,oneof" json:"access_token_expires,omitempty"`            // 访问令牌过期时间
 	RefreshTokenExpires   *durationpb.Duration   `protobuf:"bytes,4,opt,name=refresh_token_expires,json=refreshTokenExpires,proto3,oneof" json:"refresh_token_expires,omitempty"`         // 刷新令牌过期时间
@@ -208,7 +208,7 @@ func (x *Middleware_Auth) GetRefreshTokenKeyPrefix() string {
 	return ""
 }
 
-// 性能指标
+// 性能指标配置
 type Middleware_Metrics struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Histogram     bool                   `protobuf:"varint,1,opt,name=histogram,proto3" json:"histogram,omitempty"` // 直方图

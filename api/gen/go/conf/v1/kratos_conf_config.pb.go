@@ -26,8 +26,8 @@ const (
 type RemoteConfig_Type int32
 
 const (
-	RemoteConfig_TYPE_UNSPECIFIED RemoteConfig_Type = 0
-	RemoteConfig_TYPE_NACOS       RemoteConfig_Type = 1
+	RemoteConfig_TYPE_UNSPECIFIED RemoteConfig_Type = 0 // 未指定
+	RemoteConfig_TYPE_NACOS       RemoteConfig_Type = 1 // Nacos
 )
 
 // Enum value maps for RemoteConfig_Type.
@@ -69,7 +69,7 @@ func (RemoteConfig_Type) EnumDescriptor() ([]byte, []int) {
 	return file_conf_v1_kratos_conf_config_proto_rawDescGZIP(), []int{0, 0}
 }
 
-// 配置服务
+// 远程配置服务
 type RemoteConfig struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Type          string                 `protobuf:"bytes,1,opt,name=type,proto3" json:"type,omitempty"` // 配置类型
@@ -129,16 +129,16 @@ type RemoteConfig_Nacos struct {
 	Port                 uint64                 `protobuf:"varint,2,opt,name=port,proto3" json:"port,omitempty"`                                                                  // 服务端端口
 	Username             string                 `protobuf:"bytes,3,opt,name=username,proto3" json:"username,omitempty"`                                                           // 用户名
 	Password             string                 `protobuf:"bytes,4,opt,name=password,proto3" json:"password,omitempty"`                                                           // 密码
-	NamespaceId          string                 `protobuf:"bytes,10,opt,name=namespace_id,json=namespaceId,proto3" json:"namespace_id,omitempty"`                                 // 命名空间ID
+	NamespaceId          string                 `protobuf:"bytes,10,opt,name=namespace_id,json=namespaceId,proto3" json:"namespace_id,omitempty"`                                 // 命名空间 ID
 	Group                string                 `protobuf:"bytes,11,opt,name=group,proto3" json:"group,omitempty"`                                                                // 配置分组
-	DataId               string                 `protobuf:"bytes,12,opt,name=data_id,json=dataId,proto3" json:"data_id,omitempty"`                                                // 配置数据ID
+	DataId               string                 `protobuf:"bytes,12,opt,name=data_id,json=dataId,proto3" json:"data_id,omitempty"`                                                // 配置数据 ID
 	LogLevel             string                 `protobuf:"bytes,20,opt,name=log_level,json=logLevel,proto3" json:"log_level,omitempty"`                                          // 日志级别
 	CacheDir             string                 `protobuf:"bytes,21,opt,name=cache_dir,json=cacheDir,proto3" json:"cache_dir,omitempty"`                                          // 缓存目录
 	LogDir               string                 `protobuf:"bytes,22,opt,name=log_dir,json=logDir,proto3" json:"log_dir,omitempty"`                                                // 日志目录
 	NotLoadCacheAtStart  bool                   `protobuf:"varint,30,opt,name=not_load_cache_at_start,json=notLoadCacheAtStart,proto3" json:"not_load_cache_at_start,omitempty"`  // 启动时不加载缓存
 	UpdateCacheWhenEmpty bool                   `protobuf:"varint,31,opt,name=update_cache_when_empty,json=updateCacheWhenEmpty,proto3" json:"update_cache_when_empty,omitempty"` // 当配置为空时更新缓存
 	UpdateThreadNum      int32                  `protobuf:"varint,40,opt,name=update_thread_num,json=updateThreadNum,proto3" json:"update_thread_num,omitempty"`                  // 更新服务的线程数
-	Timeout              *durationpb.Duration   `protobuf:"bytes,41,opt,name=timeout,proto3" json:"timeout,omitempty"`                                                            // http 请求超时时间
+	Timeout              *durationpb.Duration   `protobuf:"bytes,41,opt,name=timeout,proto3" json:"timeout,omitempty"`                                                            // HTTP 请求超时时间
 	BeatInterval         *durationpb.Duration   `protobuf:"bytes,42,opt,name=beat_interval,json=beatInterval,proto3" json:"beat_interval,omitempty"`                              // 心跳间隔时间
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache

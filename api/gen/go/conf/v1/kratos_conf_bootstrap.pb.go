@@ -21,10 +21,10 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// 引导信息
+// 引导配置
 type Bootstrap struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Server        *Server                `protobuf:"bytes,1,opt,name=server,proto3,oneof" json:"server,omitempty"`
+	Server        *Server                `protobuf:"bytes,1,opt,name=server,proto3,oneof" json:"server,omitempty"` // 服务器配置
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

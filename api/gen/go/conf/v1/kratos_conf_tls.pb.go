@@ -21,12 +21,12 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// TLS配置
+// TLS 配置
 type TLS struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
-	File               *TLS_File              `protobuf:"bytes,1,opt,name=file,proto3,oneof" json:"file,omitempty"`
-	Config             *TLS_Config            `protobuf:"bytes,2,opt,name=config,proto3,oneof" json:"config,omitempty"`
-	InsecureSkipVerify bool                   `protobuf:"varint,3,opt,name=insecure_skip_verify,json=insecureSkipVerify,proto3" json:"insecure_skip_verify,omitempty"`
+	File               *TLS_File              `protobuf:"bytes,1,opt,name=file,proto3,oneof" json:"file,omitempty"`                                                    // 文件方式配置
+	Config             *TLS_Config            `protobuf:"bytes,2,opt,name=config,proto3,oneof" json:"config,omitempty"`                                                // 内存方式配置
+	InsecureSkipVerify bool                   `protobuf:"varint,3,opt,name=insecure_skip_verify,json=insecureSkipVerify,proto3" json:"insecure_skip_verify,omitempty"` // 跳过证书验证（不推荐用于生产环境）
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -82,11 +82,12 @@ func (x *TLS) GetInsecureSkipVerify() bool {
 	return false
 }
 
+// 文件方式加载 TLS 证书
 type TLS_File struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CertPath      *string                `protobuf:"bytes,1,opt,name=cert_path,json=certPath,proto3,oneof" json:"cert_path,omitempty"`
-	KeyPath       *string                `protobuf:"bytes,2,opt,name=key_path,json=keyPath,proto3,oneof" json:"key_path,omitempty"`
-	CaPath        *string                `protobuf:"bytes,3,opt,name=ca_path,json=caPath,proto3,oneof" json:"ca_path,omitempty"`
+	CertPath      *string                `protobuf:"bytes,1,opt,name=cert_path,json=certPath,proto3,oneof" json:"cert_path,omitempty"` // 证书文件路径
+	KeyPath       *string                `protobuf:"bytes,2,opt,name=key_path,json=keyPath,proto3,oneof" json:"key_path,omitempty"`    // 私钥文件路径
+	CaPath        *string                `protobuf:"bytes,3,opt,name=ca_path,json=caPath,proto3,oneof" json:"ca_path,omitempty"`       // CA 证书文件路径
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -142,11 +143,12 @@ func (x *TLS_File) GetCaPath() string {
 	return ""
 }
 
+// 内存方式加载 TLS 证书
 type TLS_Config struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	CertPem       []byte                 `protobuf:"bytes,1,opt,name=cert_pem,json=certPem,proto3,oneof" json:"cert_pem,omitempty"`
-	KeyPem        []byte                 `protobuf:"bytes,2,opt,name=key_pem,json=keyPem,proto3,oneof" json:"key_pem,omitempty"`
-	CaPem         []byte                 `protobuf:"bytes,3,opt,name=ca_pem,json=caPem,proto3,oneof" json:"ca_pem,omitempty"`
+	CertPem       []byte                 `protobuf:"bytes,1,opt,name=cert_pem,json=certPem,proto3,oneof" json:"cert_pem,omitempty"` // 证书 PEM 内容
+	KeyPem        []byte                 `protobuf:"bytes,2,opt,name=key_pem,json=keyPem,proto3,oneof" json:"key_pem,omitempty"`    // 私钥 PEM 内容
+	CaPem         []byte                 `protobuf:"bytes,3,opt,name=ca_pem,json=caPem,proto3,oneof" json:"ca_pem,omitempty"`       // CA 证书 PEM 内容
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

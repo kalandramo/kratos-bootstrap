@@ -22,7 +22,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// 服务器
+// 服务器配置
 type Server struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Rest          *Server_REST           `protobuf:"bytes,1,opt,name=rest,proto3,oneof" json:"rest,omitempty"`           // REST 服务配置
@@ -83,17 +83,17 @@ func (x *Server) GetWebsocket() *Server_Websocket {
 	return nil
 }
 
-// REST
+// REST 服务配置
 type Server_REST struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Network       string                 `protobuf:"bytes,1,opt,name=network,proto3" json:"network,omitempty"`                                    // 网络
+	Network       string                 `protobuf:"bytes,1,opt,name=network,proto3" json:"network,omitempty"`                                    // 网络类型，如：tcp
 	Addr          string                 `protobuf:"bytes,2,opt,name=addr,proto3" json:"addr,omitempty"`                                          // 服务监听地址
-	Timeout       *durationpb.Duration   `protobuf:"bytes,3,opt,name=timeout,proto3" json:"timeout,omitempty"`                                    // 超时时间
-	Cors          *Server_REST_CORS      `protobuf:"bytes,10,opt,name=cors,proto3" json:"cors,omitempty"`                                         // 服务监听地址
-	Middleware    *Middleware            `protobuf:"bytes,11,opt,name=middleware,proto3" json:"middleware,omitempty"`                             // 中间件
-	Tls           *TLS                   `protobuf:"bytes,12,opt,name=tls,proto3" json:"tls,omitempty"`                                           // TLS配置
-	EnableSwagger bool                   `protobuf:"varint,20,opt,name=enable_swagger,json=enableSwagger,proto3" json:"enable_swagger,omitempty"` // 启用SwaggerUI
-	EnablePprof   bool                   `protobuf:"varint,21,opt,name=enable_pprof,json=enablePprof,proto3" json:"enable_pprof,omitempty"`       // 启用pprof
+	Timeout       *durationpb.Duration   `protobuf:"bytes,3,opt,name=timeout,proto3" json:"timeout,omitempty"`                                    // 请求超时时间
+	Cors          *Server_REST_CORS      `protobuf:"bytes,10,opt,name=cors,proto3" json:"cors,omitempty"`                                         // CORS 跨域配置
+	Middleware    *Middleware            `protobuf:"bytes,11,opt,name=middleware,proto3" json:"middleware,omitempty"`                             // 中间件配置
+	Tls           *TLS                   `protobuf:"bytes,12,opt,name=tls,proto3" json:"tls,omitempty"`                                           // TLS 配置
+	EnableSwagger bool                   `protobuf:"varint,20,opt,name=enable_swagger,json=enableSwagger,proto3" json:"enable_swagger,omitempty"` // 启用 SwaggerUI
+	EnablePprof   bool                   `protobuf:"varint,21,opt,name=enable_pprof,json=enablePprof,proto3" json:"enable_pprof,omitempty"`       // 启用 pprof 性能分析
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -184,14 +184,14 @@ func (x *Server_REST) GetEnablePprof() bool {
 	return false
 }
 
-// gPRC
+// gRPC 服务配置
 type Server_GRPC struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Network       string                 `protobuf:"bytes,1,opt,name=network,proto3" json:"network,omitempty"` // 网络
-	Addr          string                 `protobuf:"bytes,2,opt,name=addr,proto3" json:"addr,omitempty"`       // 服务监听地址
-	Timeout       *durationpb.Duration   `protobuf:"bytes,3,opt,name=timeout,proto3" json:"timeout,omitempty"` // 超时时间
-	Middleware    *Middleware            `protobuf:"bytes,4,opt,name=middleware,proto3" json:"middleware,omitempty"`
-	Tls           *TLS                   `protobuf:"bytes,5,opt,name=tls,proto3" json:"tls,omitempty"` // TLS配置
+	Network       string                 `protobuf:"bytes,1,opt,name=network,proto3" json:"network,omitempty"`       // 网络类型，如：tcp
+	Addr          string                 `protobuf:"bytes,2,opt,name=addr,proto3" json:"addr,omitempty"`             // 服务监听地址
+	Timeout       *durationpb.Duration   `protobuf:"bytes,3,opt,name=timeout,proto3" json:"timeout,omitempty"`       // 请求超时时间
+	Middleware    *Middleware            `protobuf:"bytes,4,opt,name=middleware,proto3" json:"middleware,omitempty"` // 中间件配置
+	Tls           *TLS                   `protobuf:"bytes,5,opt,name=tls,proto3" json:"tls,omitempty"`               // TLS 配置
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -261,15 +261,15 @@ func (x *Server_GRPC) GetTls() *TLS {
 	return nil
 }
 
-// Websocket
+// Websocket 服务配置
 type Server_Websocket struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Network       string                 `protobuf:"bytes,1,opt,name=network,proto3" json:"network,omitempty"` // 网络样式：http、https
+	Network       string                 `protobuf:"bytes,1,opt,name=network,proto3" json:"network,omitempty"` // 网络类型：http、https
 	Addr          string                 `protobuf:"bytes,2,opt,name=addr,proto3" json:"addr,omitempty"`       // 服务监听地址
-	Path          string                 `protobuf:"bytes,3,opt,name=path,proto3" json:"path,omitempty"`       // 路径
-	Codec         string                 `protobuf:"bytes,4,opt,name=codec,proto3" json:"codec,omitempty"`     // 编解码器：json,xml,yaml...
-	Timeout       *durationpb.Duration   `protobuf:"bytes,5,opt,name=timeout,proto3" json:"timeout,omitempty"` // 超时时间
-	Tls           *TLS                   `protobuf:"bytes,6,opt,name=tls,proto3" json:"tls,omitempty"`         // TLS配置
+	Path          string                 `protobuf:"bytes,3,opt,name=path,proto3" json:"path,omitempty"`       // 连接路径
+	Codec         string                 `protobuf:"bytes,4,opt,name=codec,proto3" json:"codec,omitempty"`     // 编解码器：json、xml、yaml 等
+	Timeout       *durationpb.Duration   `protobuf:"bytes,5,opt,name=timeout,proto3" json:"timeout,omitempty"` // 请求超时时间
+	Tls           *TLS                   `protobuf:"bytes,6,opt,name=tls,proto3" json:"tls,omitempty"`         // TLS 配置
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -346,11 +346,12 @@ func (x *Server_Websocket) GetTls() *TLS {
 	return nil
 }
 
+// CORS 跨域配置
 type Server_REST_CORS struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Headers       []string               `protobuf:"bytes,1,rep,name=headers,proto3" json:"headers,omitempty"`
-	Methods       []string               `protobuf:"bytes,2,rep,name=methods,proto3" json:"methods,omitempty"`
-	Origins       []string               `protobuf:"bytes,3,rep,name=origins,proto3" json:"origins,omitempty"`
+	Headers       []string               `protobuf:"bytes,1,rep,name=headers,proto3" json:"headers,omitempty"` // 允许的请求头
+	Methods       []string               `protobuf:"bytes,2,rep,name=methods,proto3" json:"methods,omitempty"` // 允许的请求方法
+	Origins       []string               `protobuf:"bytes,3,rep,name=origins,proto3" json:"origins,omitempty"` // 允许的源
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
